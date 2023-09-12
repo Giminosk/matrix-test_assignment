@@ -69,3 +69,6 @@ target/
 .env
 
 app.log
+
+.venv
+.ruff_cache
