@@ -23,6 +23,12 @@ with open("tests/example.txt", "r") as f:
 @pytest.mark.asyncio
 @pytest.mark.parametrize("url, expected", [(SOURCE_URL, RESPONSE)])
 async def test_get_http_response(url, expected):
+    """
+    Test to get the response from a given url in async mode.
+    Args:
+        url (_type_): url to request.
+        expected (_type_): expected response.
+    """
     async with AsyncClient() as client:
         response = await get_http_response(url=url, client=client)
         assert response == RESPONSE
@@ -39,6 +45,12 @@ async def test_get_http_response(url, expected):
     ],
 )
 async def test_get_http_response_exceptions(invalid_url, exception):
+    """
+    Test to test the exceptions raised by the get_http_response function.
+    Args:
+        invalid_url (_type_): _description_
+        exception (_type_): _description_
+    """
     try:
         async with AsyncClient() as client:
             _ = await get_http_response(url=invalid_url, client=client)
@@ -49,10 +61,22 @@ async def test_get_http_response_exceptions(invalid_url, exception):
 @pytest.mark.asyncio
 @pytest.mark.parametrize("response, matrix", [(RESPONSE, MATRIX)])
 async def test_parse_response_to_matrix(response, matrix):
+    """
+    Test to test the parse_response_to_matrix function.
+    Args:
+        response (_type_): response from url to parse.
+        matrix (_type_): parsed response as matrix.
+    """
     assert await parse_response_to_matrix(response=response) == matrix
 
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("matrix, traversal", [(MATRIX, TRAVERSAL)])
 async def test_traverse_matrix(matrix, traversal):
+    """
+    Test to test the traverse_matrix function.
+    Args:
+        matrix (_type_): matrix to traverse.
+        traversal (_type_): expected traversal.
+    """
     assert await traverse_matrix(matrix=matrix) == traversal

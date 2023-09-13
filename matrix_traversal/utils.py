@@ -6,6 +6,21 @@ from matrix_traversal.exceptions import HTTPException
 
 
 async def get_http_response(url: str, client: AsyncClient) -> str:
+    """
+    Function to get HTTP response from URL in asynchronous way.
+    Args:
+        url (str): url to get HTTP response from.
+        client (AsyncClient): AsyncClient instance.
+
+    Raises:
+        HTTPException: Unsupported protocol exception.
+        HTTPException: Invalid URL exception.
+        HTTPException: Timeout exception.
+        HTTPException: Status code exception.
+
+    Returns:
+        str: _description_
+    """
     try:
         response = await client.get(url)
     except UnsupportedProtocol as e:
@@ -26,6 +41,14 @@ async def get_http_response(url: str, client: AsyncClient) -> str:
 
 
 async def parse_response_to_matrix(response: str) -> list[list[int]]:
+    """
+    Function to parse a string response to a matrix.
+    Args:
+        response (str): response got from url to parse
+
+    Returns:
+        list[list[int]]: parsed matrix.
+    """
     matrix = []
     for line in response.split("\n"):
         if line and not line.startswith("+"):
@@ -38,6 +61,14 @@ async def parse_response_to_matrix(response: str) -> list[list[int]]:
 
 
 async def traverse_matrix(matrix: list[list[int]]) -> list[int]:
+    """
+    Function to traverse a matrix in spiral way.
+    Args:
+        matrix (list[list[int]]): matrix to traverse.
+
+    Returns:
+        list[int]: traversed matrix.
+    """
     result = []
     matrix = list(zip(*matrix))
     while matrix:
@@ -47,6 +78,9 @@ async def traverse_matrix(matrix: list[list[int]]) -> list[int]:
 
 
 async def main(url):
+    """
+    Main function.
+    """
     async with AsyncClient() as client:
         response = await get_http_response(url, client)
     print(response)
